@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<!-- CSS sources-->
+	{# include css files #}
+	<meta charset="UTF-8">
+	<title>{{title}}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	{% block csshead %}{% endblock csshead %}
+
+
+	<!-- Javascript sources-->
+	{# include js files #}
+	<script rel='preconnect' type="text/javascript" src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script rel='preconnect' type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.actual/1.0.19/jquery.actual.min.js"></script>
+	<script rel='preconnect' src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://www.worldwidetelescope.org/webclient/sdk/wwtsdk.js" type="text/javascript"></script>
+	{% block jshead %}{% endblock jshead %}
+</head>
+
+<body onload="initialize()">
+
+	<!-- Main Body -->
+	<div class="container-fluid" id="content">
+		<div class='row'>
+            <div class='col-md-12'>
+                <h1>{{title}}</h1>
+            </div>
+        </div>
+
+		<div id="WWTCanvas" style="width:750px; height:750px; border-style: none; border-width: 0px;"></div>
+	</div>
+
+
+	<!-- Javascript Code Block -->
+	<script type='application/javascript'>
+        // declare global Worldwide Telescope object
+        var wwt;
+        
+        // This function initializes the wwt object and registers the wwtReady event
+        // once the initialization is done the wwtReady event will be fired
+    	function initialize() {
+    	    wwt = wwtlib.WWTControl.initControl("WWTCanvas");
+	        wwt.add_ready(wwtReady);
+	    }
+	    // This is the ready event function where you would put your custom code for WWT
+        // following the initForWwt() call
+	    function wwtReady() {
+	        wwt.loadImageCollection("http://www.worldwidetelescope.org/COMPLETE/wwtcomplete.wtml");
+	        // put your custom initialization code here
+	    }
+        
+	</script>
+	{% block code %}{% endblock code %}
+</body>
+
+</html>
